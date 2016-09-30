@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour {
 	
 	//commit changes
 	
-	
 	//game state empty objects
 	GameObject startScreen;
 	GameObject gameScreen;

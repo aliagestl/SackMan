@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour {
 
 =======
 	
+
+	//more changessssss
+
 >>>>>>> origin/master
 	//game state empty objects
 	GameObject startScreen;

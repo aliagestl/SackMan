@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
 	GameStates GameState = GameStates.start;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	//i did a thing on gittttt
 
 =======
@@ -15,6 +16,9 @@ public class GameManager : MonoBehaviour {
 
 	//more changessssss
 
+>>>>>>> origin/master
+=======
+//asdfsadfasdfasd
 >>>>>>> origin/master
 	//game state empty objects
 	GameObject startScreen;

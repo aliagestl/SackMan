@@ -7,6 +7,10 @@ public class GameManager : MonoBehaviour {
 	enum GameStates {start, levelSelect , play,pause , end};
 	GameStates GameState = GameStates.start;
 
+	
+	//commit changes
+	
+	
 	//game state empty objects
 	GameObject startScreen;
 	GameObject gameScreen;

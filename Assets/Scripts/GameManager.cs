@@ -4,32 +4,21 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 	//gamestufffff
-	enum GameStates {start, levelSelect , play,pause , end};
-	GameStates GameState = GameStates.start;
+	public enum GameStates {start, levelSelect , play,pause , end};
+	public GameStates GameState = GameStates.start;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	//i did a thing on gittttt
-
-=======
-	
-
-	//more changessssss
-
->>>>>>> origin/master
-=======
-//asdfsadfasdfasd
->>>>>>> origin/master
 	//game state empty objects
 	GameObject startScreen;
 	GameObject gameScreen;
 	GameObject endScreen;
 	public List<GameObject> levels;
 
+
 	public GameObject redPot;
 	public GameObject yellowPot;
 	public GameScript level;
 	public string currentLevel= "LEVEL_1";//hardcoded
+
 
 	// Use this for initialization
 	void Start () {
@@ -91,6 +80,8 @@ public class GameManager : MonoBehaviour {
 
 		}
 		else if(GameState == GameStates.play){
+
+
 
 			//end game with escape
 			if (Input.GetKeyDown(KeyCode.Return) ) {

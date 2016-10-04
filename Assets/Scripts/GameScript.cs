@@ -14,16 +14,34 @@ public class GameScript : MonoBehaviour {
 	public GameObject item1;
 	public GameObject item2;
 
+    //game manager object
+    private GameObject gm;
 
-	// Use this for initialization
-	void Start () {
-		//bring in objects
 
-		cursor = GameObject.Find ("cursor");
+
+    //settin up timer
+    public float totaltime = 80;
+    private float timeleft;
+
+
+    // Use this for initialization
+    void Start () {
+
+
+        //set up timer
+        timeleft = totaltime;
+
+
+        //bring in objects
+
+        cursor = GameObject.Find ("cursor");
 		player = GameObject.Find ("player");
+        gm = GameObject.Find("GM");
 
-		//set things at spawn points
-		cursor.transform.position = player.transform.position;
+
+
+        //set things at spawn points
+        cursor.transform.position = player.transform.position;
 
 		//loops to setup item spawn points
 		spawnPoints= new List<GameObject>();
@@ -46,5 +64,26 @@ public class GameScript : MonoBehaviour {
 			cursor.transform.position = pos;
 		}
 
-	}
+
+
+        if (timeleft > 0)
+        {
+            timeleft = timeleft - Time.deltaTime;
+        }
+        else
+        {
+            GameObject[] names = GameObject.FindGameObjectsWithTag("pot");
+            if (names.Length > 0)
+            {
+                foreach (GameObject item in names)
+                {
+                    Destroy(item);
+                }
+            }
+            
+
+        }
+
+
+    }
 }

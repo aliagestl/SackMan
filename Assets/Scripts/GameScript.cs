@@ -19,24 +19,19 @@ public class GameScript : MonoBehaviour {
 
 
 
-    //settin up timer
-    public float totaltime = 80;
-    private float timeleft;
+    
 
 
     // Use this for initialization
     void Start () {
 
 
-        //set up timer
-        timeleft = totaltime;
 
 
         //bring in objects
 
         cursor = GameObject.Find ("cursor");
 		player = GameObject.Find ("player");
-        gm = GameObject.Find("GM");
 
 
 
@@ -65,24 +60,6 @@ public class GameScript : MonoBehaviour {
 		}
 
 
-
-        if (timeleft > 0)
-        {
-            timeleft = timeleft - Time.deltaTime;
-        }
-        else
-        {
-            GameObject[] names = GameObject.FindGameObjectsWithTag("pot");
-            if (names.Length > 0)
-            {
-                foreach (GameObject item in names)
-                {
-                    Destroy(item);
-                }
-            }
-            
-
-        }
 
 
     }

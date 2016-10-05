@@ -87,6 +87,7 @@ public class PlayerScript : MonoBehaviour {
 			item = GameObject.Find ("GM").GetComponent<GameManager> ().yellowPot;
 		}
 		item.transform.parent = (GameObject.Find ("LEVEL_1").transform);
+        item.tag = "pot";
 		inventory.Add (item);
 	}
 	

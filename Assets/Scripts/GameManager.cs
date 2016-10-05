@@ -20,8 +20,12 @@ public class GameManager : MonoBehaviour {
 	public string currentLevel= "LEVEL_1";//hardcoded
 
 
-	// Use this for initialization
-	void Start () {
+    //setting up timer
+    public float totaltime = 80;
+    private float timeleft;
+
+    // Use this for initialization
+    void Start () {
 		//setup game states
 		startScreen = GameObject.Find("STARTSCREEN");
 		endScreen = GameObject.Find("ENDSCREEN");
@@ -35,7 +39,11 @@ public class GameManager : MonoBehaviour {
 		gameScreen.SetActive(false);
 		endScreen.SetActive(false);
 
-	}
+
+        //set up timer
+        timeleft = totaltime;
+
+    }
 
 	//change/set current level
 	void setLevel(string levelName){
@@ -81,10 +89,32 @@ public class GameManager : MonoBehaviour {
 		}
 		else if(GameState == GameStates.play){
 
+            //if time left is greater than 0 time counts down
+            if (timeleft > 0)
+            {
+                timeleft = timeleft - Time.deltaTime;
+                Debug.Log(timeleft);
+            }
+
+            //if time is less than 0 it deletes all the pots
+            else
+            {
+                GameObject[] names = GameObject.FindGameObjectsWithTag("pot");
+                if (names.Length > 0)
+                {
+                    foreach (GameObject item in names)
+                    {
+                        Destroy(item);
+                    }
+                }
 
 
-			//end game with escape
-			if (Input.GetKeyDown(KeyCode.Return) ) {
+            }
+
+
+
+            //end game with escape
+            if (Input.GetKeyDown(KeyCode.Return) ) {
 				//turn off game screen
 				gameScreen.SetActive(false);
 				endScreen.SetActive(true);

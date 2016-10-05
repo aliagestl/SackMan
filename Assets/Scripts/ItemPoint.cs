@@ -15,6 +15,9 @@ public class ItemPoint : MonoBehaviour {
 	void Start () {
 		gm = GameObject.Find("LEVEL_1").GetComponent<GameScript>();
 
+        //set color of dot to color of pot
+
+
 
 		hasItem = false;
 

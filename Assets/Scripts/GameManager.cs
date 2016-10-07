@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 	//gamestufffff
-	public enum GameStates {start, levelSelect , play,pause , end};
+	public enum GameStates {start,info, levelSelect , play, pause , end};
 	public GameStates GameState = GameStates.start;
 
 	//game state empty objects
@@ -62,13 +62,18 @@ public class GameManager : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-
 		//check game states
 		if (GameState == GameStates.start) {
+			if (Input.GetMouseButtonDown(0)||Input.GetKeyDown(KeyCode.Return) ) {
+				GameState=GameStates.info;
+			}
+		}
+		//check game states
+		if (GameState == GameStates.info) {
 
 			//change gamestate when clicked
 			//evenutally will have to click on button to start
-			if (Input.GetMouseButtonDown(0) ) {
+			if (Input.GetMouseButtonDown(0) ||Input.GetKeyDown(KeyCode.Return) ) {
 				//turn off start screen
 				startScreen.SetActive(false);
 				//setup and load game
@@ -93,13 +98,13 @@ public class GameManager : MonoBehaviour {
             if (timeleft > 0)
             {
                 timeleft = timeleft - Time.deltaTime;
-                Debug.Log(timeleft);
+                //Debug.Log(timeleft);
             }
 
             //if time is less than 0 it deletes all the pots
             else
             {
-                GameObject[] names = GameObject.FindGameObjectsWithTag("pot");
+                GameObject[] names = GameObject.FindGameObjectsWithTag("Pot");
                 if (names.Length > 0)
                 {
                     foreach (GameObject item in names)

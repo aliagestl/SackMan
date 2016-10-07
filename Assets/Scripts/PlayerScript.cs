@@ -10,14 +10,17 @@ public class PlayerScript : MonoBehaviour {
 	public GameObject plrSpawn;
 	Vector3 moveDirection;
 	Vector3 currentPos;
-	Vector3 target;
+	Vector3 moveTarget;
+
 	float moveSpeed= 4f;
 
 
-	List<GameObject> inventory;
-	int maxInventorySlots;
-	int activeItemIndex=0;
-	GameObject item;
+	//List<GameObject> inventory;
+	//int maxInventorySlots;
+	//int activeItemIndex=0;
+	GameObject item=null;
+
+
 
 	// Use this for initialization
 	void Start () {
@@ -29,10 +32,6 @@ public class PlayerScript : MonoBehaviour {
 		player = GameObject.Find ("player");
 		player.transform.position = plrSpawn.transform.position;
 
-		//setup inventory
-		inventory= new List<GameObject>();
-		maxInventorySlots = 2;
-		AddItem ("redPot");
 	}
 
 	//move character towards marker
@@ -47,8 +46,8 @@ public class PlayerScript : MonoBehaviour {
 
 		//move character
 		if (dir.magnitude > 0.1f) {
-			target = moveDirection * moveSpeed + currentPos;
-			player.transform.position = Vector3.Lerp (currentPos, target, Time.deltaTime);
+			moveTarget = moveDirection * moveSpeed + currentPos;
+			player.transform.position = Vector3.Lerp (currentPos, moveTarget, Time.deltaTime);
 		}
 	}
 
@@ -67,16 +66,14 @@ public class PlayerScript : MonoBehaviour {
 	
 	//place item down anywhere
 	void placeActiveItem(){
-		if(inventory.Count>0){
 			//instantiate item in level
-			GameObject item =(GameObject)Instantiate(inventory[activeItemIndex], transform.position, Quaternion.identity);
-			item.transform.parent=(GameObject.Find("LEVEL_1").transform);
+			//GameObject item =(GameObject)Instantiate(inventory[activeItemIndex], transform.position, Quaternion.identity);
+			//item.transform.parent=(GameObject.Find("LEVEL_1").transform);
 //			//remove from inventory
 //			inventory.RemoveAt(activeItemIndex);
 //			while(activeItemIndex>inventory.Count-1){
 //				activeItemIndex-=1;
 //			}
-		}
 	}
 
 	//add item to inventory
@@ -88,9 +85,17 @@ public class PlayerScript : MonoBehaviour {
 		}
 		item.transform.parent = (GameObject.Find ("LEVEL_1").transform);
         item.tag = "pot";
-		inventory.Add (item);
 	}
-	
+
+	//check collisions
+	void OnTriggerEnter2D(Collider2D other) 
+	{
+		Debug.Log ("colliding with "+ other.name);
+		if (other.gameObject.CompareTag ("Pot"))
+		{
+			other.gameObject.SetActive (false);
+		}
+	}
 
 	// Update is called once per frame
 	void Update () {

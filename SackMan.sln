@@ -1,7 +1,7 @@
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2008
-
-Project("{F8E875A4-6998-39B7-46A5-F99C104E7E2B}") = "SackMan", "Assembly-CSharp.csproj", "{EDAF08E8-A021-F765-F84A-415A86FCB460}"
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SackMan.CSharp", "SackMan.CSharp.csproj", "{283BB9DD-FD61-2FB2-82F4-20784CC72C80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,14 +9,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EDAF08E8-A021-F765-F84A-415A86FCB460}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EDAF08E8-A021-F765-F84A-415A86FCB460}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EDAF08E8-A021-F765-F84A-415A86FCB460}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EDAF08E8-A021-F765-F84A-415A86FCB460}.Release|Any CPU.Build.0 = Release|Any CPU
+		{283BB9DD-FD61-2FB2-82F4-20784CC72C80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{283BB9DD-FD61-2FB2-82F4-20784CC72C80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{283BB9DD-FD61-2FB2-82F4-20784CC72C80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{283BB9DD-FD61-2FB2-82F4-20784CC72C80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+<<<<<<< HEAD
 								GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
@@ -37,4 +38,6 @@ Global
 		$3.scope = text/plain
 	EndGlobalSection
 
+=======
+>>>>>>> origin/master
 EndGlobal

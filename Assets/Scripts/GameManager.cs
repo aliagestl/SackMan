@@ -24,6 +24,15 @@ public class GameManager : MonoBehaviour {
     public float totaltime = 80;
     private float timeleft;
 
+    //to retrieve time left
+    public float timeLeft
+    {
+        get
+        {
+            return timeleft;
+        }
+    }
+
     // Use this for initialization
     void Start () {
 		//setup game states

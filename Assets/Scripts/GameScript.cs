@@ -8,6 +8,7 @@ public class GameScript : MonoBehaviour {
 
 	public List<GameObject> spawnPoints;
 	public GameObject cursor;
+	public GameObject marker;
 	public GameObject player;
 
 	public GameObject activeItem;
@@ -18,20 +19,15 @@ public class GameScript : MonoBehaviour {
     private GameObject gm;
 
 
-
-    
-
-
     // Use this for initialization
     void Start () {
 
 
-
-
         //bring in objects
 
-        cursor = GameObject.Find ("cursor");
+        cursor = GameObject.Find ("Cursor");
 		player = GameObject.Find ("player");
+		marker = GameObject.Find ("Marker");
 
 
 

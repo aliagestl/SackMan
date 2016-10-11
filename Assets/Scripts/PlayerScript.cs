@@ -38,7 +38,7 @@ public class PlayerScript : MonoBehaviour {
 	void moveToMarker(){
 		//get character to move towards cursor marker
 		currentPos = player.transform.position;
-		Vector3 moveToward = level.GetComponent<GameScript>().cursor.transform.position;
+		Vector3 moveToward = level.GetComponent<GameScript>().marker.transform.position;
 		moveDirection = moveToward - currentPos;
 		Vector2 dir = moveToward - currentPos;
 		moveDirection.z = 0; 
@@ -60,7 +60,7 @@ public class PlayerScript : MonoBehaviour {
 
 		//if close to point
 		if(moveDirection.magnitude<1){
-			itemPoint.GetComponent<ItemPoint>().AddItem("yellowPot");
+			itemPoint.GetComponent<ItemPoint>().AddItem("purplePot");
 		}
 	}
 	
@@ -69,22 +69,16 @@ public class PlayerScript : MonoBehaviour {
 			//instantiate item in level
 			//GameObject item =(GameObject)Instantiate(inventory[activeItemIndex], transform.position, Quaternion.identity);
 			//item.transform.parent=(GameObject.Find("LEVEL_1").transform);
-//			//remove from inventory
-//			inventory.RemoveAt(activeItemIndex);
-//			while(activeItemIndex>inventory.Count-1){
-//				activeItemIndex-=1;
-//			}
 	}
 
 	//add item to inventory
 	public void AddItem(string itemType){
-		if (itemType == "redPot") {
-			item = GameObject.Find ("GM").GetComponent<GameManager> ().redPot;
-		} else if (itemType == "yellowPot") {
-			item = GameObject.Find ("GM").GetComponent<GameManager> ().yellowPot;
+		if (itemType == "purplePot") {
+			item = GameObject.Find ("GM").GetComponent<GameManager> ().purplePot;
+		} else if (itemType == "orangePot") {
+			item = GameObject.Find ("GM").GetComponent<GameManager> ().orangePot;
 		}
 		item.transform.parent = (GameObject.Find ("LEVEL_1").transform);
-        item.tag = "pot";
 	}
 
 	//check collisions

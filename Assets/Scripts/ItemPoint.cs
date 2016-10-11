@@ -30,11 +30,11 @@ public class ItemPoint : MonoBehaviour {
 	}
 
 	void DetermineItem(){
-		if(type=="redPot"){
-			item=GameObject.Find("GM").GetComponent<GameManager>().redPot;
+		if(type=="purplePot"){
+			item=GameObject.Find("GM").GetComponent<GameManager>().purplePot;
 		}
-		else if(type == "yellowPot"){
-			item=GameObject.Find("GM").GetComponent<GameManager>().yellowPot;
+		else if(type == "orangePot"){
+			item=GameObject.Find("GM").GetComponent<GameManager>().orangePot;
 		}
 	}
 
@@ -52,10 +52,11 @@ public class ItemPoint : MonoBehaviour {
 	
 	public void AddItem(string itemType){
 		if (hasItem==false) {
-			if (itemType == "redPot") {
-				item=GameObject.Find("GM").GetComponent<GameManager>().redPot;
-			} else if (itemType == "yellowPot") {
-				item=GameObject.Find("GM").GetComponent<GameManager>().yellowPot;
+			if(type=="purplePot"){
+				item=GameObject.Find("GM").GetComponent<GameManager>().purplePot;
+			}
+			else if(type == "orangePot"){
+				item=GameObject.Find("GM").GetComponent<GameManager>().orangePot;
 			}
 			item = (GameObject)Instantiate(item, transform.position, Quaternion.identity);
 			item.transform.parent=(GameObject.Find("LEVEL_1").transform);

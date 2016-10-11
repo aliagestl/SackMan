@@ -14,8 +14,8 @@ public class GameManager : MonoBehaviour {
 	public List<GameObject> levels;
 
 
-	public GameObject redPot;
-	public GameObject yellowPot;
+	public GameObject purplePot;
+	public GameObject orangePot;
 	public GameScript level;
 	public string currentLevel= "LEVEL_1";//hardcoded
 
@@ -146,7 +146,6 @@ public class GameManager : MonoBehaviour {
 		//Quit the application
 		Application.Quit();
 		#endif
-		
 		//If we are running in the editor
 		#if UNITY_EDITOR
 		//Stop playing the scene

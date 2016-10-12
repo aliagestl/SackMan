@@ -10,7 +10,12 @@ public class ItemScript : MonoBehaviour {
 	void Start () {
 	
 	}
+
+	public void removedFromPoint(){
 	
+	
+	}
+
 	// Update is called once per frame
 	void Update () {
 	

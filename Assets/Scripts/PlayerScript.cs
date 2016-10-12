@@ -15,11 +15,8 @@ public class PlayerScript : MonoBehaviour {
 	float moveSpeed= 4f;
 
 
-	//List<GameObject> inventory;
-	//int maxInventorySlots;
-	//int activeItemIndex=0;
-	GameObject item=null;
-
+	public GameObject item=null;
+	public bool hasItem{get{ if(item != null)return true; else return false;}}
 
 
 	// Use this for initialization
@@ -45,46 +42,65 @@ public class PlayerScript : MonoBehaviour {
 		moveDirection.Normalize ();
 
 		//move character
-		if (dir.magnitude > 0.1f) {
+		if (dir.magnitude > 1f) {
 			moveTarget = moveDirection * moveSpeed + currentPos;
 			player.transform.position = Vector3.Lerp (currentPos, moveTarget, Time.deltaTime);
 		}
 	}
 
-	//place an item at aan item point. called by item point messege
-	void placeActiveItem(GameObject itemPoint){
-		//check dist from spawn point
-		currentPos = player.transform.position;
-		Vector3 moveToward = itemPoint.transform.position;
-		moveDirection = moveToward - currentPos;
+	//place an item at an item point. called by item point messege
+	void interactWithPoint(GameObject itemPoint){
+		if (item != null) {
+			//check dist from spawn point
+			currentPos = player.transform.position;
+			Vector3 moveToward = itemPoint.transform.position;
+			moveDirection = moveToward - currentPos;
 
-		//if close to point
-		if(moveDirection.magnitude<1){
-			itemPoint.GetComponent<ItemPoint>().AddItem("yellowPot");
+			//if close to point
+			if (moveDirection.magnitude < 1.5f) {
+				Debug.Log ("player is in range");
+				//if current held item belongs on that point
+				if (item.name == itemPoint.GetComponent<ItemPoint> ().itemType) {
+					if(itemPoint.GetComponent<ItemPoint> ().hasItem==false){
+					itemPoint.GetComponent<ItemPoint> ().ShowItem ();
+					//---> add code to add to inventory
+						removeItem();
+					Debug.Log("placed item");
+					}
+					else { Debug.Log("there already is an item there..."); }
+				}
+			}
+		} else {
+			//check dist from spawn point
+			currentPos = player.transform.position;
+			Vector3 moveToward = itemPoint.transform.position;
+			moveDirection = moveToward - currentPos;
+			//if close to point
+			if (moveDirection.magnitude < 1.5f) {
+				Debug.Log ("player is in range");
+				if(itemPoint.GetComponent<ItemPoint>().hasItem){
+				itemPoint.GetComponent<ItemPoint> ().HideItem();
+				//---> add code to add to inventory
+					AddItem(itemPoint.GetComponent<ItemPoint> ().itemType);
+				Debug.Log("took item");
+				}
+				else {Debug.Log("there is no item to take...");}
+
+			}
 		}
-	}
-	
-	//place item down anywhere
-	void placeActiveItem(){
-			//instantiate item in level
-			//GameObject item =(GameObject)Instantiate(inventory[activeItemIndex], transform.position, Quaternion.identity);
-			//item.transform.parent=(GameObject.Find("LEVEL_1").transform);
-//			//remove from inventory
-//			inventory.RemoveAt(activeItemIndex);
-//			while(activeItemIndex>inventory.Count-1){
-//				activeItemIndex-=1;
-//			}
 	}
 
 	//add item to inventory
 	public void AddItem(string itemType){
 		if (itemType == "redPot") {
-			item = GameObject.Find ("GM").GetComponent<GameManager> ().redPot;
+			item = GameObject.Find ("redPot");
 		} else if (itemType == "yellowPot") {
-			item = GameObject.Find ("GM").GetComponent<GameManager> ().yellowPot;
+			item = GameObject.Find ("yellowPot");
 		}
-		item.transform.parent = (GameObject.Find ("LEVEL_1").transform);
-        item.tag = "pot";
+	}
+
+	void removeItem(){
+		item=null;
 	}
 
 	//check collisions
@@ -93,7 +109,7 @@ public class PlayerScript : MonoBehaviour {
 		Debug.Log ("colliding with "+ other.name);
 		if (other.gameObject.CompareTag ("Pot"))
 		{
-			other.gameObject.SetActive (false);
+			//other.gameObject.SetActive (false);
 		}
 	}
 
@@ -103,7 +119,7 @@ public class PlayerScript : MonoBehaviour {
 			moveToMarker();
 
 			if (Input.GetKeyDown(KeyCode.Space) ) {
-				placeActiveItem();
+				//placeActiveItem();
 			}
 
 		}

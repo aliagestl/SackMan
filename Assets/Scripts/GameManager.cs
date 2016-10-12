@@ -12,8 +12,7 @@ public class GameManager : MonoBehaviour {
 	GameObject gameScreen;
 	GameObject endScreen;
 	public List<GameObject> levels;
-
-
+	
 	public GameObject redPot;
 	public GameObject yellowPot;
 	public GameScript level;
@@ -90,23 +89,13 @@ public class GameManager : MonoBehaviour {
 				//wil add delay and button animation before switching states
 				GameState = GameStates.play;
 			}
-
-//			//go directly to game
-//			//turn off start screen
-//			startScreen.SetActive(false);
-//			//setup and load game
-//			gameScreen.SetActive(true);
-//			//wil add delay and button animation before switching states
-//			GameState = GameStates.play;
-
-
 		}
 		else if(GameState == GameStates.play){
 
             //if time left is greater than 0 time counts down
             if (timeleft > 0)
             {
-                timeleft = timeleft - Time.deltaTime;
+                //timeleft = timeleft - Time.deltaTime;
                 //Debug.Log(timeleft);
             }
 

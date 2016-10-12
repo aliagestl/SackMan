@@ -5,67 +5,80 @@ public class ItemPoint : MonoBehaviour {
 
 	GameScript gm;
 
-	GameObject item;
-	public string type;
+	public GameObject itemPrefab;
+	public GameObject item;
+	public string itemType;
+	public bool hasItem;
 
 	public bool startWithItem;
-	public bool hasItem;
+	public bool isMouseOver=false;
+
 
 	// Use this for initialization
 	void Start () {
 		gm = GameObject.Find("LEVEL_1").GetComponent<GameScript>();
+		itemType = itemPrefab.name;
 
-        //set color of dot to color of pot
-
-
-
-		hasItem = false;
+		item = (GameObject)Instantiate(itemPrefab, transform.position, Quaternion.identity);
+		item.transform.parent=(this.gameObject.transform);
+		item.SetActive (false);
 
 		//setup spawn point items
 		if (startWithItem) {
-			AddItem(type);
+			ShowItem();
 		} else {
-			hasItem=false;;
+			HideItem();
 		}
 	}
 
-	void DetermineItem(){
-		if(type=="redPot"){
-			item=GameObject.Find("GM").GetComponent<GameManager>().redPot;
-		}
-		else if(type == "yellowPot"){
-			item=GameObject.Find("GM").GetComponent<GameManager>().yellowPot;
-		}
+	void OnMouseEnter(){
+		isMouseOver = true;
+	}
+	void OnMouseExit(){
+		isMouseOver = false;
 	}
 
-	void RemoveItem(){
+	//old version of additem--not using this
+//	public void AddItem(string itemType){
+//		if (hasItem==false) {
+//			if (itemType == "redPot") {
+//				item=GameObject.Find("GM").GetComponent<GameManager>().redPot;
+//			} else if (itemType == "yellowPot") {
+//				item=GameObject.Find("GM").GetComponent<GameManager>().yellowPot;
+//			}
+//			item = (GameObject)Instantiate(item, transform.position, Quaternion.identity);
+//			item.transform.parent=(this.gameObject.transform);
+//
+//			hasItem=true;
+//		}
+//	}
+
+	//'add' and 'remove' the item
+	public void ShowItem(){
+		item.SetActive (true);
+		hasItem = true;
+	}
+	public void HideItem(){
+		item.SetActive(false);
 		hasItem = false;
-	}
-
-	void OnMouseOver(){
-		//
-		if (!hasItem) {
-			//AddItem(type);
-			gm.player.SendMessage("placeActiveItem",this.gameObject);
-		}
-	}
-	
-	public void AddItem(string itemType){
-		if (hasItem==false) {
-			if (itemType == "redPot") {
-				item=GameObject.Find("GM").GetComponent<GameManager>().redPot;
-			} else if (itemType == "yellowPot") {
-				item=GameObject.Find("GM").GetComponent<GameManager>().yellowPot;
-			}
-			item = (GameObject)Instantiate(item, transform.position, Quaternion.identity);
-			item.transform.parent=(GameObject.Find("LEVEL_1").transform);
-
-			hasItem=true;
-		}
 	}
 
 	// Update is called once per frame
 	void Update () {
-	
+		if (isActiveAndEnabled) {
+
+			//interact with point
+			if (Input.GetMouseButtonDown(0)&& isMouseOver ) {
+				Debug.Log("clicked on item point");
+				if (!hasItem) {
+					gm.player.SendMessage ("interactWithPoint", this.gameObject);
+					Debug.Log ("asking player to place item");
+				} else {
+					gm.player.SendMessage ("interactWithPoint", this.gameObject);
+					Debug.Log("asking player to take item");
+				}
+			}
+		}
+
 	}
 }

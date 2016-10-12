@@ -3,7 +3,8 @@ using System.Collections;
 
 public class ItemPoint : MonoBehaviour {
 
-	GameScript gm;
+	GameScript level;
+	GameManager gm;
 
 	public GameObject itemPrefab;
 	public GameObject item;
@@ -16,7 +17,8 @@ public class ItemPoint : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		gm = GameObject.Find("LEVEL_1").GetComponent<GameScript>();
+		level = GameObject.Find("LEVEL_1").GetComponent<GameScript>();
+		gm = GameObject.Find("GM").GetComponent<GameManager>();
 		itemType = itemPrefab.name;
 
 		item = (GameObject)Instantiate(itemPrefab, transform.position, Quaternion.identity);
@@ -65,16 +67,21 @@ public class ItemPoint : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+
+		if (gm.timeLeft <= 0) {
+			HideItem();
+		}
+
 		if (isActiveAndEnabled) {
 
 			//interact with point
 			if (Input.GetMouseButtonDown(0)&& isMouseOver ) {
 				Debug.Log("clicked on item point");
 				if (!hasItem) {
-					gm.player.SendMessage ("interactWithPoint", this.gameObject);
+					level.player.SendMessage ("interactWithPoint", this.gameObject);
 					Debug.Log ("asking player to place item");
 				} else {
-					gm.player.SendMessage ("interactWithPoint", this.gameObject);
+					level.player.SendMessage ("interactWithPoint", this.gameObject);
 					Debug.Log("asking player to take item");
 				}
 			}

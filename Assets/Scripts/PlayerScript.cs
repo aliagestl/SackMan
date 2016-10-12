@@ -13,21 +13,33 @@ public class PlayerScript : MonoBehaviour {
 	Vector3 moveTarget;
 
 	float moveSpeed= 4f;
-
+	public bool playerHiding;
 
 	public GameObject item=null;
 	public bool hasItem{get{ if(item != null)return true; else return false;}}
 
+	GameObject RIcon;
+	GameObject YIcon;
+	GameObject r_pot;
+	GameObject y_pot;
 
 	// Use this for initialization
 	void Start () {
 		level = GameObject.Find("LEVEL_1").GetComponent<GameScript>();
 		gm = GameObject.Find("GM").GetComponent<GameManager>();
 
+		RIcon=GameObject.Find ("redPotIcon");
+		YIcon=GameObject.Find ("yellowPotIcon");
+		r_pot=GameObject.Find ("plrRedPot");
+		y_pot=GameObject.Find ("plrYellowPot");
+
+
+
 		//setup player
 		plrSpawn = GameObject.Find("plrSpawn");
 		player = GameObject.Find ("player");
 		player.transform.position = plrSpawn.transform.position;
+		playerHiding = false;
 
 	}
 
@@ -64,7 +76,8 @@ public class PlayerScript : MonoBehaviour {
 					if(itemPoint.GetComponent<ItemPoint> ().hasItem==false){
 					itemPoint.GetComponent<ItemPoint> ().ShowItem ();
 					//---> add code to add to inventory
-						removeItem();
+					removeItem();
+					gm.score+=10;
 					Debug.Log("placed item");
 					}
 					else { Debug.Log("there already is an item there..."); }
@@ -89,6 +102,29 @@ public class PlayerScript : MonoBehaviour {
 			}
 		}
 	}
+
+	//place an item at an item point. called by item point messege
+	void getPot(GameObject storageSpot){
+//		if (item != null) {
+//			Debug.Log ("you're already holding an item...");
+//		} else {
+			//check dist from spawn point
+			currentPos = player.transform.position;
+			Vector3 moveToward = storageSpot.transform.position;
+			moveDirection = moveToward - currentPos;
+			//if close to point
+			if (moveDirection.magnitude < 1.5f) {
+				Debug.Log ("player is in range");
+				//---> add code to add to inventory
+				removeItem();
+				AddItem (storageSpot.GetComponent<StorageSpot> ().itemType);
+				Debug.Log ("took item");
+			} else {
+				Debug.Log ("there is no item to take...");
+			}
+//		}
+	}
+
 
 	//add item to inventory
 	public void AddItem(string itemType){
@@ -122,6 +158,35 @@ public class PlayerScript : MonoBehaviour {
 				//placeActiveItem();
 			}
 
+			//update icon
+			if(item!=null){
+				if(item.name=="redPot"){
+					RIcon.SetActive(true);
+					YIcon.SetActive(false);
+					r_pot.SetActive(true);
+					y_pot.SetActive(false);
+				}
+				else if(item.name=="yellowPot"){
+					RIcon.SetActive(false);
+					YIcon.SetActive(true);
+
+					r_pot.SetActive(false);
+					y_pot.SetActive(true);
+				}
+			}
+			else{
+				RIcon.SetActive(false);
+				YIcon.SetActive(false);
+				r_pot.SetActive(false);
+				y_pot.SetActive(false);
+			}
+
+			//kill player if no time is left and they are not hiding
+			if(gm.timeLeft < 0 && playerHiding == false)
+			{
+				this.gameObject.SetActive(false);
+				gm.playerAlive = false;
+			}
 		}
 	}
 }

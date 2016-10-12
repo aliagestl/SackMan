@@ -17,11 +17,6 @@ public class GameScript : MonoBehaviour {
     //game manager object
     private GameObject gm;
 
-
-
-    
-
-
     // Use this for initialization
     void Start () {
 

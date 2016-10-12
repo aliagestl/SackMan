@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour {
 
 	//game state empty objects
 	GameObject startScreen;
+	GameObject infoScreen;
 	GameObject gameScreen;
 	GameObject endScreen;
 	public List<GameObject> levels;
@@ -20,8 +21,10 @@ public class GameManager : MonoBehaviour {
 
 
     //setting up timer
-    public float totaltime = 80;
+    public float totaltime;
     private float timeleft;
+	public bool playerAlive;
+	public int score=0;
 
     //to retrieve time left
     public float timeLeft
@@ -37,6 +40,7 @@ public class GameManager : MonoBehaviour {
 		//setup game states
 		startScreen = GameObject.Find("STARTSCREEN");
 		endScreen = GameObject.Find("ENDSCREEN");
+		infoScreen = GameObject.Find("INFOSCREEN");
 
 		//for now only use level 1
 		gameScreen = GameObject.Find("LEVEL_1");
@@ -46,11 +50,13 @@ public class GameManager : MonoBehaviour {
 		startScreen.SetActive(true);
 		gameScreen.SetActive(false);
 		endScreen.SetActive(false);
+		infoScreen.SetActive (false);
 
 
         //set up timer
         timeleft = totaltime;
-
+		//set up playerAlive Bool
+		playerAlive = true;
     }
 
 	//change/set current level
@@ -73,7 +79,10 @@ public class GameManager : MonoBehaviour {
 		//check game states
 		if (GameState == GameStates.start) {
 			if (Input.GetMouseButtonDown(0)||Input.GetKeyDown(KeyCode.Return) ) {
+				startScreen.SetActive(false);
+				infoScreen.SetActive(true);
 				GameState=GameStates.info;
+				return;
 			}
 		}
 		//check game states
@@ -95,29 +104,37 @@ public class GameManager : MonoBehaviour {
             //if time left is greater than 0 time counts down
             if (timeleft > 0)
             {
-                //timeleft = timeleft - Time.deltaTime;
+                timeleft = timeleft - Time.deltaTime;
                 //Debug.Log(timeleft);
             }
 
             //if time is less than 0 it deletes all the pots
             else
             {
-                GameObject[] names = GameObject.FindGameObjectsWithTag("Pot");
-                if (names.Length > 0)
-                {
-                    foreach (GameObject item in names)
-                    {
-                        Destroy(item);
-                    }
-                }
-
+//                GameObject[] names = GameObject.FindGameObjectsWithTag("Pot");
+//                if (names.Length > 0)
+//                {
+//                    foreach (GameObject item in names)
+//                    {
+//                        //item.SetActive(false);
+//                    }
+//                }
+				timeleft = totaltime;
 
             }
-
+			//if the player is dead, move to gameover screen
+			//Check PlayerScript for setting playerAlive = false
+			if(playerAlive == false)
+			{
+				gameScreen.SetActive(false);
+				endScreen.SetActive(true);
+				//wil add delay and button animation before switching states
+				GameState = GameStates.end;
+			}
 
 
             //end game with escape
-            if (Input.GetKeyDown(KeyCode.Return) ) {
+            if (Input.GetKeyDown(KeyCode.Q) ) {
 				//turn off game screen
 				gameScreen.SetActive(false);
 				endScreen.SetActive(true);
@@ -126,6 +143,12 @@ public class GameManager : MonoBehaviour {
 			}
 		}
 		else if(GameState==GameStates.end){
+
+			if (Input.GetKeyDown (KeyCode.Return)) 
+			{
+				Application.LoadLevel(0);
+				//SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+			}
 
 		}
 

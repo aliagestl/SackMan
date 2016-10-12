@@ -16,18 +16,20 @@ public class TimerDisplay : MonoBehaviour {
     public GUIStyle style;
 
     [Header("Score")]
-    public int score;
+    public int score=0;
     
 
     void OnGUI()
     {
         //draws to the screen
-        GUI.Label(new Rect(X, Y, width, height), "Time left: "+time, style);
+        GUI.Label(new Rect(X, Y, width, height), "Time until pots are destroyed: "+time, style);
+		GUI.Label(new Rect(X, Y+37, width, height), "Score: "+score, style);
     }
 	
 	// Update is called once per frame
 	void Update () {
         //finds the time left in the game once per frame
         time = (int)GameObject.Find("GM").GetComponent<GameManager>().timeLeft;
+		score = GameObject.Find ("GM").GetComponent<GameManager>().score;
 	}
 }
